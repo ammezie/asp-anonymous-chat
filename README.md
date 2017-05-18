@@ -25,7 +25,7 @@ If you don't have one already, create a free Pusher account at https://pusher.co
 Then fill in your Pusher app credentials in your `pusherasp\Controllers\HomeController` file by replacing this line with your appid, appkey and app secret respectively:
 
 ```
-var pusher = new Pusher("PUSHER_APP_ID", "PUSHER_APP_KEY", "PUSHER_APP_SECRET");
+var pusher = new Pusher("PUSHER_APP_ID", "PUSHER_APP_KEY", "PUSHER_APP_SECRET", options);
 ```
 
 Also, remember to fill in the your secret key in your `pusherasp\Views\Home\Index.cshtml` file by replacing this line:
