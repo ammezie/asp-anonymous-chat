@@ -1,31 +1,143 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@{
+    Layout = null;
+    Response.ContentType = "text/HTML";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+
+<html>
+<head>
+    <title>
+        Pusher Tutorial
+    </title>
+</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="//js.pusher.com/4.0/pusher.min.js"></script>
+<style>
+    .chat {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        .chat li {
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px dotted #B3A9A9;
+        }
+
+            .chat li.left .chat-body {
+                margin-left: 60px;
+            }
+
+            .chat li.right .chat-body {
+                margin-right: 60px;
+            }
+
+
+            .chat li .chat-body p {
+                margin: 0;
+                color: #777777;
+            }
+
+        .panel .slidedown .glyphicon, .chat .glyphicon {
+            margin-right: 5px;
+        }
+
+    .panel-body {
+        overflow-y: scroll;
+        height: 250px;
+    }
+
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #555;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-comment"></span> Chat
+
+                    </div>
+                    <div class="panel-body">
+                        <ul class="chat" id="chat"></ul>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <input id="btn-input" class="form-control input-sm" placeholder="Type your message here..." type="text">
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning btn-sm" id="btn-chat">
+                                    Send
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+ 
+
+</body>
+</html>
+
+<script>
+
+    $(document).ready(function () {
+        $("#btn-chat").click(function () {
+            var message = $('#btn-input').val();
+
+            $.post({
+                url: '@Url.Action("Pushermessage", "Home")',
+                dataType: 'text/HTML',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "message": message
+                }),
+                success: function (data) {
+
+                    $("#btn-input").val('');
+
+                }
+            });
+
+        })
+    })
+
+    var pusher = new Pusher('4b34c484eeb9fe4f4142');
+    var my_channel = pusher.subscribe('asp_channel');
+    my_channel.bind("asp_event", function (data) {
+        var new_message = '<li class="left clearfix"><span class="chat-img pull-left">';
+        new_message +='<img src="http://placehold.it/50/55C1E7/fff&amp;text='+data.name+'" alt="User Avatar" class="img-circle">';
+        new_message +=  '</span>';
+        new_message +=      '<div class="chat-body clearfix">';
+        new_message +=          '<div class="header">';
+        new_message +=               '<strong class="primary-font">'+data.name+'</strong> <small class="pull-right text-muted">';
+        new_message +=                  '</div>';
+        new_message +=                      '<p>';
+        new_message +=  data.message;
+        new_message +=                      '</p>';
+        new_message +=                   '</div>';
+        new_message +=      '</li>';
+    $("#chat").append(new_message);
+    });
+
+   
+
+</script>

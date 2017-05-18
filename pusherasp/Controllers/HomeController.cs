@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PusherServer;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace pusherasp.Controllers
 {
@@ -13,18 +16,17 @@ namespace pusherasp.Controllers
             return View();
         }
 
-        public ActionResult About()
+       
+        [HttpPost]
+        public async Task<ActionResult> Pushermessage(String message)
         {
-            ViewBag.Message = "Your application description page.";
+            var options = new PusherOptions();
+            options.Cluster = "XXX_CLUSTER";
+            var pusher = new Pusher("XXX_APP_ID", "XXX_APP_KEY", "XXX_APP_SECRET", options);
+            ITriggerResult result = await pusher.TriggerAsync("asp_channel", "asp_event", new { message = message, name = "Anonymous" });
+           
+            return new HttpStatusCodeResult((int)HttpStatusCode.OK);
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+        } 
     }
 }
