@@ -120,7 +120,7 @@
         })
     })
 
-    var pusher = new Pusher(PUSHER_APP_KEY);
+    var pusher = new Pusher('PUSHER_APP_KEY', {cluster: 'XXX_CLUSTER'});
     var my_channel = pusher.subscribe('asp_channel');
     my_channel.bind("asp_event", function (data) {
         var new_message = '<li class="left clearfix"><span class="chat-img pull-left">';
