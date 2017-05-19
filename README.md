@@ -28,10 +28,10 @@ Then fill in your Pusher app credentials in your `pusherasp\Controllers\HomeCont
 var pusher = new Pusher("PUSHER_APP_ID", "PUSHER_APP_KEY", "PUSHER_APP_SECRET", options);
 ```
 
-Also, remember to fill in the your secret key in your `pusherasp\Views\Home\Index.cshtml` file by replacing this line:
+Also, remember to fill in the your secret key and app cluster in your `pusherasp\Views\Home\Index.cshtml` file by updating this line:
 
 ```
-var pusher = new Pusher('PUSHER_APP_KEY');
+var pusher = new Pusher('PUSHER_APP_KEY', {cluster: 'XXX_CLUSTER'});
 ```
 
 And finally, start the application by clicking the debug button on your visual studio.
