@@ -1,5 +1,6 @@
-# ASP.NET Public Anonymous Chat 
-Build a public anonymous chatroom with .NET and Pusher
+# ASP.NET Public Anonymous Chat
+
+Build a public anonymous chatroom with .NET, jQuery and Pusher. Follow the tutorial [https://pusher.com/tutorials/anonymous-chat-aspnet/](https://pusher.com/tutorials/anonymous-chat-aspnet/)
 
 ### Getting Started
 
@@ -17,7 +18,9 @@ git clone https://github.com/ammezie/asp-anonymous-chat.git
 
 After cloning, open the `pusherasp.sln` file in visual studio.
 
-### Setup Pusher
+### Prerequisites
+
+#### Setup Pusher
 
 If you don't have one already, create a free Pusher account at https://pusher.com/signup then login to your dashboard and create an app. 
 
@@ -35,3 +38,13 @@ var pusher = new Pusher('PUSHER_APP_KEY', {cluster: 'XXX_CLUSTER'});
 ```
 
 And finally, start the application by clicking the debug button on your visual studio.
+
+## Built With
+
+* [Pusher](https://pusher.com/) - APIs to enable devs building realtime features
+* [C# ASP.NET](https://www.asp.net/) - An open source web framework for building modern web apps and services with .NET
+* [jQuery](https://jquery.com) - A fast, small, and feature-rich JavaScript library
+
+## Acknowledgments
+
+* [Bootsnipp chat snippet](http://bootsnipp.com/snippets/featured/collapsible-chat-widget)
